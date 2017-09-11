@@ -10,37 +10,17 @@ if test "x$ANDROID_NDK" = x ; then
   exit 1
 fi
 
-function build {
-  rm -rf "$current_dir/obj"
-
-  cd "$current_dir/jni"
-  $ANDROID_NDK/ndk-build TARGET_PLATFORM=$ANDROID_PLATFORM TARGET_ARCH_ABI=$TARGET_ARCH_ABI
-
-  mkdir -p "$current_dir/$package_name-$build_version/libs/$TARGET_ARCH_ABI"
-  cp "$current_dir/obj/local/$TARGET_ARCH_ABI/libctemplate.a" "$current_dir/$package_name-$build_version/libs/$TARGET_ARCH_ABI"
-  rm -rf "$current_dir/src"
-}
-
 # Includes
 cd "$current_dir"
 tar xzf include.tar.gz
 mkdir -p "$current_dir/$package_name-$build_version/include"
 cp -r include/ctemplate "$current_dir/$package_name-$build_version/include"
 
-# Start building.
-ANDROID_PLATFORM=android-16
-archs="armeabi armeabi-v7a x86"
-for arch in $archs ; do
-  TARGET_ARCH_ABI=$arch
-  build
-done
-ANDROID_PLATFORM=android-21
-archs="arm64-v8a"
-for arch in $archs ; do
-  TARGET_ARCH_ABI=$arch
-  build
-done
+cd "$current_dir/jni"
+$ANDROID_NDK/ndk-build
+
+TARGET_ARCH_ABI=armeabi-v7a
+mkdir -p "$current_dir/$package_name-$build_version/libs/$TARGET_ARCH_ABI"
+cp "$current_dir/obj/local/$TARGET_ARCH_ABI/libctemplate.a" "$current_dir/$package_name-$build_version/libs/$TARGET_ARCH_ABI"
 
 cd "$current_dir"
-zip -qry "$package_name-$build_version.zip" "$package_name-$build_version"
-rm -rf "$package_name-$build_version"

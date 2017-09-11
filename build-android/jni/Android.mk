@@ -15,11 +15,9 @@ src_dir := $(LOCAL_PATH)/../../src
 
 NDK_TOOLCHAIN_VERSION := clang
 LOCAL_C_INCLUDES := $(src_dir)/../build-android/include $(src_dir) \
-  $(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++/4.9/include \
-  $(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++/4.9/libs/$(TARGET_ARCH_ABI)/include \
-  $(ANDROID_NDK)/sources/android/support/include
-  # $(ANDROID_NDK)/sources/cxx-stl/llvm-libc++/libcxx/include
-  # $(ANDROID_NDK)/sources/cxx-stl/llvm-libc++/include
+  $(ANDROID_NDK)/sources/android/support/include \
+  $(ANDROID_NDK)/sources/cxx-stl/llvm-libc++/libcxx/include \
+  $(ANDROID_NDK)/sources/cxx-stl/llvm-libc++/include
 LOCAL_MODULE := ctemplate
 LOCAL_SRC_FILES := $(addprefix $(src_dir)/, $(src_files))
 
