@@ -14,7 +14,7 @@ pushd "$(realpath $(dirname $0))"
     mkdir -p "$package_name-$build_version/include"
     cp -r include/ctemplate "$package_name-$build_version/include"
 
-    $ANDROID_NDK/ndk-build
+    $ANDROID_NDK/ndk-build -j "$@"
 
     TARGET_ARCH_ABI=armeabi-v7a
     SRC=${NDK_OUT:-obj}/local/$TARGET_ARCH_ABI/libctemplate.a
