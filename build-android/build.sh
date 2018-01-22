@@ -3,8 +3,8 @@
 build_version=3
 package_name=ctemplate-android
 
-if test "x$ANDROID_NDK" = x ; then
-  echo should set ANDROID_NDK before running this script.
+if ! which ndk-build > /dev/null ; then
+  echo Android NDK should be installed and ndk-build in PATH
   exit 1
 fi
 
@@ -14,7 +14,7 @@ pushd "$(realpath $(dirname $0))"
     mkdir -p "$package_name-$build_version/include"
     cp -r include/ctemplate "$package_name-$build_version/include"
 
-    $ANDROID_NDK/ndk-build -j "$@"
+    ndk-build -j "$@"
 
     TARGET_ARCH_ABI=armeabi-v7a
     SRC=${NDK_OUT:-obj}/local/$TARGET_ARCH_ABI/libctemplate.a
