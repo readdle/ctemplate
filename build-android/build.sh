@@ -16,10 +16,12 @@ pushd "$(realpath $(dirname $0))"
 
     ndk-build -j "$@"
 
-    TARGET_ARCH_ABI=armeabi-v7a
-    SRC=${NDK_OUT:-obj}/local/$TARGET_ARCH_ABI/libctemplate.a
-    DST=$package_name-$build_version/libs/$TARGET_ARCH_ABI
-
-    mkdir -p "$DST"
-    cp "$SRC" "$DST"
+    archs="armeabi-v7a arm64-v8a x86 x86_64"
+    for arch in $archs ; do
+        TARGET_ARCH_ABI=$arch
+        SRC=${NDK_OUT:-obj}/local/$TARGET_ARCH_ABI/libctemplate.a
+        DST=$package_name-$build_version/libs/$TARGET_ARCH_ABI
+        mkdir -p "$DST"
+        cp "$SRC" "$DST"
+    done
 popd
