@@ -1,6 +1,5 @@
 #!/bin/sh
 
-build_version=3
 package_name=ctemplate-android
 
 if ! which ndk-build > /dev/null ; then
@@ -11,8 +10,8 @@ fi
 pushd "$(realpath $(dirname $0))"
     # Includes
     tar xzf include.tar.gz
-    mkdir -p "$package_name-$build_version/include"
-    cp -r include/ctemplate "$package_name-$build_version/include"
+    mkdir -p "$package_name/include"
+    cp -r include/ctemplate "$package_name/include"
 
     ndk-build -j "$@"
 
@@ -20,7 +19,7 @@ pushd "$(realpath $(dirname $0))"
     for arch in $archs ; do
         TARGET_ARCH_ABI=$arch
         SRC=${NDK_OUT:-obj}/local/$TARGET_ARCH_ABI/libctemplate.a
-        DST=$package_name-$build_version/libs/$TARGET_ARCH_ABI
+        DST=$package_name/libs/$TARGET_ARCH_ABI
         mkdir -p "$DST"
         cp "$SRC" "$DST"
     done
