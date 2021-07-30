@@ -23,10 +23,6 @@ include $(CLEAR_VARS)
 LOCAL_C_INCLUDES := \
   $(BASE_PATH)/build-android/include \
   $(src_dir) \
-  \
-  $(NDK_ROOT)/sources/android/support/include \
-  $(NDK_ROOT)/sources/cxx-stl/llvm-libc++/libcxx/include \
-  $(NDK_ROOT)/sources/cxx-stl/llvm-libc++/include
 
 LOCAL_MODULE := ctemplate
 LOCAL_SRC_FILES := $(addprefix $(src_dir)/, $(src_files))
