@@ -4,8 +4,10 @@
 import PackageDescription
 
 let target: String
-#if TARGET_ANDROID || TARGET_LINUX
+#if TARGET_ANDROID
 target = "android"
+#elseif TARGET_LINUX
+target = "linux"
 #else
 target = "apple"
 #endif
